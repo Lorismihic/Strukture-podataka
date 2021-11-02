@@ -1,0 +1,213 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct _Osoba;
+typedef struct _Osoba* Pozicija;
+typedef struct _osoba{
+	char ime[20];
+	char prezime[20];
+	int GodRod;
+	Pozicija next;
+} Osoba;
+
+
+int UnosPocetak(Pozicija head, char* ime, char prezime, int GodRod);
+int IspisListe(Pozicija prvi);
+Osoba* Unos(char* ime,char prezime, int GodRod);
+int UnosKraj(Pozicija head);
+Pozicija TraziPoPrezimenu(Pozicija head, char prezime);
+
+int main(int argc, char** argv)
+{
+	Osoba head={.next=NULL; .ime={0}, .prezime={0}, .GodRod={0}};
+	Pozicija p=&head;
+
+	return EXIT_SUCCESS;
+}
+
+Osoba* Unos(struct Osoba, char* ime,char prezime, int GodRod){
+	Pozicija novaOsoba=NULL;
+
+	novaOsoba=(Pozicija)malloc(sizeof(Osoba));
+	if (!novaOsoba){
+		perror("Neuspjesna alokacija.\n");
+		return NULL;
+	}
+	else{
+		novaOsoba.ime=ime;
+		novaOsoba.prezime=prezime;
+		novaOsoba.GodRod=GodRod;
+	}
+	return novaOsoba*;
+}
+
+int UnosPocetak(Pozicija head, char* ime, char prezime, int GodRod){
+	novaOsoba=(Pozicija)Unos(ime, prezime, GodRood);
+	if (novaOsoba!=NULL){
+		novaOsoba->next=head->next;
+		head->next=novaOsoba;
+		return 0,
+	}
+	return -1;
+}
+
+int UnosKraj(Pozicija head, char* ime, char prezime, int GodRod){
+	Pozicija i=head;
+	novaOsoba=(Pozicija)Unos(ime, prezime, GodRood);
+	if (novaOsoba!=NULL){
+		while(i->next!=NULL)
+			i=i->next;
+		novaOsoba->next=i->next;
+		i->next=novaOsoba;
+		return 0,
+	}
+	return -1;
+}
+
+Pozicija TraziPoPrezimenu(Pozicija head, char prezime){
+	Pozicija i=head;
+	while(i!=NULL && i->osoba.prezime!=prezime)
+		i=i->next;
+	return i;
+}
+
+int IspisListe(Pozicija prvi){
+	Pozicija temp=prvi;
+	while(temp){
+		printf("Ime: %s, prezime: %s, godinaRođenja: %d \n",temp->ime, temp->prezime, temp->GodRod );
+		temp=temp->next;
+	}
+	return EXIT_SUCCESS;
+}
+
+int BrisiOsobuPoImenu(Pozicija head, char ime){
+	Pozicija temp;
+	Pozicija i=head;
+	while(i->next=NULL && i->next->osoba.ime!=ime){
+		i=i->next;
+	}
+	if (i->next!=NULL){
+		temp=i->next;
+		i->next=temp->next;
+		free(temp);
+		return 0
+	}
+	return -1
+}
+
+int UnosIza(Pozicija head, char prezimeizakojeg, char* ime, char prezime, int GodRod){
+	Pozicija i;
+	novaOsoba=(Pozicija)Unos(ime, prezime, GodRod);
+	if (novaOsoba!=NULL){
+		i=TraziPoPrezimenu(Pozicija head, prezimeizakojeg);
+		if i!=NULL{
+			novaOsoba->next=i->next;
+			i->next=novaOsoba;
+		}
+		novaOsoba->next=head->next;
+		head->next=novaOsoba;
+		return 0,
+	}
+	return -1;
+}
+
+Pozicija TraziIspred(Pozicija head, char prezime){
+	Pozicija h=head;
+	while(h-next!=NULL && h->next->Osoba.prezime!=prezime){
+		h=h->next;
+	}
+	if (h->next!=NULL)
+		return h;
+	return NULL;
+
+}
+
+int UnosIspred(Pozicija head, char prezimeispredkojeg, char* ime, char prezime, int GodRod){
+	Pozicija i,h;
+	novaOsoba=(Pozicija)Unos(ime, prezime, GodRod);
+	if (novaOsoba!=NULL){
+		novaOsoba=UnosIza(TraziIspred(head, prezimeispredkojeg), ime, prezime, GodRod);
+		return 0,
+	}
+	return -1;
+}
+
+int PrebrojiListu(Pozicija head){
+	Pozicija i=head->next;
+	if (i!=NULL){
+		int brojac=0;
+		while(i->next!=NULL){
+			i=i->next;
+			brojac++;
+		}
+		return brojac;
+	}
+	return -1;
+}
+
+int Razvrstaj(Pozicija head){
+	count=PrebrojiListu(head);
+	if (count==0){
+		return 0;
+	}
+	for (c=1; c<=count-1; c++){
+		Pozicija P=head;
+		Pozicija i=P->next;
+		while(i->next!=NULL){
+			comp=strcmp(P->next->Osoba.prezime,P->next->next->Osoba.prezime);
+			if (comp>0){
+				P->next=i->next;
+				i->next=P->next->next;
+				P->next->next=i;
+			}
+			P=P->next;
+			i=i->next;
+		}
+	}
+	IspisListe(head);
+	return 0;	
+}
+
+int UpisListeUDat(Pozicija head){
+	
+	linije=PrebrojiListu(head);
+	if (linije>0){
+		Pozicija P=head.next;
+		FILE *filePointer;
+		filePointer=fopen("Dat.txt","w");
+		for (l=1; l<=linije, l++){
+			fputs(filePointer, " %s %s %d \n", &P->Osoba.ime, P->Osoba.prezime, P->Osoba.GodRod);
+			P=P->next;
+		}
+		fclose(filePointer);
+		return 0;
+	}
+	return -1;
+}
+
+int CitanjeListeIzDat(){
+	FILE *fp;
+	fp=fopen("Dat.txt","r");
+	Osoba head={.next=NULL; .ime={0}, .prezime={0}, .GodRod={0}};
+	Pozicija p=&head;
+	char ime [20];
+	char prezime [20];
+	int GodRod=0;
+	if (fp!=NULL){
+		while(!feof(fp)){
+			fscanf(fp, " %s %s %d", &ime, &prezime, &GodRod);
+			novaOsoba=(Osoba)malloc(sizeof(Osoba));
+			novaOsoba.ime=ime;
+			novaOsoba.prezime=prezime;
+			novaOsoba.GodRod=GodRod;
+			novaOsoba->next=p->next;
+			p->next=novaOsoba;
+			p=p->next;
+		}
+	}
+	fclose(fp);
+	IspisListe(head);
+	return 0;
+}
